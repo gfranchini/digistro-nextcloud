@@ -1,0 +1,12 @@
+---
+- name: NextCloud | Install mariadb
+  yum:
+    name:
+      - mariadb
+      - mariadb-server
+
+- name: NextCloud | Start and enable the database
+  service:
+    name: mariadb
+    state: started
+    enabled: yes

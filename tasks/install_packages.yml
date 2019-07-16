@@ -1,0 +1,21 @@
+---
+- name: NextCloud | Install required packages
+  yum:
+    name:
+      - epel-release
+      - yum-utils
+      - unzip
+      - curl
+      - wget
+      - bash-completion
+      - policycoreutils-python
+      - mlocate
+      - bzip2
+      - httpd
+    state: latest
+
+- name: NextCloud | Enable and start apache
+  service:
+    name: httpd
+    state: started
+    enabled: yes
