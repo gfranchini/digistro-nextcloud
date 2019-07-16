@@ -1,2 +1,15 @@
 ---
 # handlers file for digistro-nextcloud
+- name: restart apache
+  service:
+    name: httpd
+    state: restarted
+
+- name: restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+
+- name: disable selinux
+  selinux:
+    state: disabled
