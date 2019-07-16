@@ -7,7 +7,7 @@ lint:
   name: yamllint
 platforms:
   - name: digistro-nextcloud
-    image: geerlingguy/docker-centos7-ansible:latest
+    image: digistro/docker-centos7-ansible:latest
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
