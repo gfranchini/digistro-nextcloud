@@ -1,0 +1,23 @@
+---
+- name: NextCloud | Configure firewall rules
+  firewalld:
+    port: "{{ item }}/tcp"
+    state: enabled
+    permanent: yes
+  with_items:
+    - 80
+    - 443
+
+- name: NextCloud | Reload firewalld
+  service:
+    name: firewalld
+    state: reloaded
+
+- name: NextCloud | Set selinux to permissive mode
+  selinux:
+    state: permissive
+    policy: targeted
+
+- name: NextCloud | Disable selinux
+  selinux:
+    state: disabled

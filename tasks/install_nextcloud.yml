@@ -1,0 +1,34 @@
+---
+- name: NextCloud | Download NextCloud package with check
+  get_url:
+    url: https://download.nextcloud.com/server/releases/{{ nextcloud_version }}.tar.bz2
+    dest: /tmp
+    checksum: sha256:https://download.nextcloud.com/server/releases/{{ nextcloud_version }}.tar.bz2.sha256
+
+- name: NextCloud | Extract NextCloud tar into /tmp
+  unarchive:
+    src: /tmp/{{ nextcloud_version }}.tar.bz2
+    dest: /tmp
+    remote_src: true
+
+- name: NextCloud | Copy NextCloud files to /var/www/html/
+  copy:
+    src: /tmp/nextcloud
+    dest: /var/www/html
+    remote_src: true
+
+- name: NextCloud | Make data folder
+  file:
+    path: /var/www/html/nextcloud/data
+    state: directory
+
+- name: NextCloud | Give apache read and write access to nextcloud directory
+  file:
+    path: /var/www/html/nextcloud
+    owner: apache
+    group: apache
+
+- name: NextCloud | Restart apache
+  service:
+    name: httpd
+    state: restarted
