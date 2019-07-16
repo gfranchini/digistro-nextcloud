@@ -6,4 +6,4 @@
 
 - include_tasks: install_database.yml
 
-- include_tasks: install_redis.yml 
+- include_tasks: install_redis.yml

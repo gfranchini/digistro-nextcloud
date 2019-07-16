@@ -12,7 +12,7 @@
       - mlocate
       - bzip2
       - httpd
-    state: latest
+    state: present
 
 - name: NextCloud | Enable and start apache
   service:
