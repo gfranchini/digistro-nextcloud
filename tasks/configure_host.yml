@@ -4,12 +4,13 @@
     port: "{{ item }}/tcp"
     state: enabled
     permanent: yes
+    immediate: yes
   register: firewall
   with_items:
     - 80
     - 443
   notify:
-    - restart firewalld
+    - reload firewalld
 
 - name: NextCloud | Set selinux to permissive mode
   selinux:
@@ -19,3 +20,14 @@
   when: ansible_selinux.status == "encforcing" or ansible_selinux.status == "enabled"
   notify:
     - disable selinux
+
+- name: NextCloud | Check for the existence of nextcloud.conf
+  stat:
+    path: /etc/httpd/conf.d/nextcloud.conf
+  register: nextcloud_apache_conf
+
+- name: NextCloud | Configure apache virtualhost file
+  template:
+    src: nextcloud.conf.j2
+    dest: /etc/httpd/conf.d/nextcloud.conf
+  when: nextcloud_apache_conf.stat.exists == False

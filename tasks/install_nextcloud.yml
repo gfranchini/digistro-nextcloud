@@ -28,7 +28,16 @@
     owner: apache
     group: apache
 
-- name: NextCloud | Restart apache
-  service:
-    name: httpd
-    state: restarted
+
+- name: NextCloud | Apache enable a2enmod
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - rewrite
+    - headers
+    - env
+    - dir
+    - mime
+  notify:
+    - restart apache
