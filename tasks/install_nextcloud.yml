@@ -1,21 +1,27 @@
 ---
+- name: NextCloud | Check that binary exists
+  stat:
+    path: /tmp/{{ nextcloud_version }}.tar.bz2
+  register: nextcloud_package
+
+- name: NextCloud | Check if NextCloud is installed
+  stat:
+    path: /var/www/html/nextcloud
+  register: nextcloud_directory
+
 - name: NextCloud | Download NextCloud package with check
   get_url:
     url: https://download.nextcloud.com/server/releases/{{ nextcloud_version }}.tar.bz2
     dest: /tmp
     checksum: sha256:https://download.nextcloud.com/server/releases/{{ nextcloud_version }}.tar.bz2.sha256
+  when: nextcloud_package.stat.exists == false
 
-- name: NextCloud | Extract NextCloud tar into /tmp
+- name: NextCloud | Extract NextCloud tar into /var/www/html
   unarchive:
     src: /tmp/{{ nextcloud_version }}.tar.bz2
-    dest: /tmp
+    dest: /var/www/html/
     remote_src: true
-
-- name: NextCloud | Copy NextCloud files to /var/www/html/
-  copy:
-    src: /tmp/nextcloud
-    dest: /var/www/html
-    remote_src: true
+  when: nextcloud_directory.stat.exists == false
 
 - name: NextCloud | Make data folder
   file:

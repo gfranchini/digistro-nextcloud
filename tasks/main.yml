@@ -8,6 +8,6 @@
 
 - include_tasks: install_redis.yml
 
-# - include_tasks: install_nextcloud.yml
+- include_tasks: install_nextcloud.yml
 
 - include_tasks: configure_host.yml
