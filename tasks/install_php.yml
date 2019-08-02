@@ -25,12 +25,12 @@
 # Test this before using in production
 - name: NextCloud | Create symlinks
   file:
-    dest: "{{ item.dest }}"
     src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     state: link
     force: yes
   with_items:
-    - { dest: /opt/rh/httpd24/root/etc/httpd/conf.d/rh-php72-php.conf, src: /etc/httpd/conf.d }
-    - { dest: /opt/rh/httpd24/root/etc/httpd/conf.modules.d/15-rh-php72-php.conf, src: /etc/httpd/conf.modules.d }
-    - { dest: /opt/rh/httpd24/root/etc/httpd/modules/librh-php72-php7.so, src: /etc/httpd/modules }
-    - { dest: /opt/rh/rh-php72/root/bin/php, src: /usr/bin/php }
+    - { src: /opt/rh/httpd24/root/etc/httpd/conf.d/rh-php72-php.conf, dest: /etc/httpd/conf.d/rh-php72-php.conf }
+    - { src: /opt/rh/httpd24/root/etc/httpd/conf.modules.d/15-rh-php72-php.conf, dest: /etc/httpd/conf.modules.d/15-rh-php72-php.conf }
+    - { src: /opt/rh/httpd24/root/etc/httpd/modules/librh-php72-php7.so, dest: /etc/httpd/modules/librh-php72-php7.so }
+    - { src: /opt/rh/rh-php72/root/bin/php, dest: /usr/bin/php }
